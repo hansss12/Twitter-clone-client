@@ -4,9 +4,6 @@ import TweetPost from "../component/TweetPost";
 import Profile from "../component/profile";
 import Thread from "../component/Thread";
 import ThreadDetail from "../component/ThreadDetail";
-import AuthLayout from "../pages/AuthLayout";
-import Auth from "../component/Auth";
-import Login from "../component/Login";
 
 const router = createBrowserRouter([
     {
@@ -55,24 +52,6 @@ const router = createBrowserRouter([
             }
         ],
     },
-    {
-      path: "/auth",
-      element: <AuthLayout />,
-      children: [
-        {
-          path: "/auth",
-          element: <Auth />
-        },
-        {
-          path: "/auth/login",
-          element: <Login />
-        },
-        {
-          path: "/auth/register",
-          element: <></>
-        }
-      ]
-    }
 ]);
 
 export default router;

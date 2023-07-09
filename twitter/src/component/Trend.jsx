@@ -69,6 +69,9 @@ export default function Trend() {
               <a href="" className="text-sm text-neutral-500 hover:underline">
                   Advertising information{" "}
               </a>
+              <a href="" className="text-sm text-neutral-500 hover:underline">
+                  Cookie Policy{" "}
+              </a>
               <br />
               <a href="" className="text-sm text-neutral-500 hover:underline">
                   More...
