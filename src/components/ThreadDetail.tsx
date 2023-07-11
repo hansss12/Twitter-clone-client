@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import img from "../assets/logo.jpg"
 import Comment from "./Comment";
+import React from "react";
 
-export default function ThreadDetail() {
+const ThreadDetail: React.FC = () => {
   return (
       <div className="flex-1 pt-2">
           <div className="flex mb-5 max-h-[8vh]">
@@ -188,3 +189,4 @@ export default function ThreadDetail() {
   );
 }
 
+export default ThreadDetail

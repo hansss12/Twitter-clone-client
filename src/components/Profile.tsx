@@ -1,9 +1,10 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import img from "../assets/logo.jpg";
+import React from "react";
 
-export default function Profile() {
-  const borderActive = "font-semibold border-b-4 pb-2 border-emerald-500";
-  const borderInactive = "font-semibold pb-2";
+const Profile: React.FC = () => {
+  const borderActive: string = "font-semibold border-b-4 pb-2 border-emerald-500";
+  const borderInactive: string = "font-semibold pb-2";
   const navigation = useLocation()
   return (
       <div className="flex-1 pt-2">
@@ -138,3 +139,5 @@ export default function Profile() {
       </div>
   );
 }
+
+export default Profile

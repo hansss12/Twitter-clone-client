@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import img from '../assets/logo.jpg'
+import React from 'react';
 
-export default function Thread() {
-  const arr = [1,2,3, 4]
+const Thread: React.FC = () => {
+  const arr : number[] = [1,2,3,4,5]
   return (
       <>
-          {arr.map((el) => {
+          {arr.map((el: any) => {
             return (
                 <div className="grid grid-cols-7 border-b border-neutral-800 pb-5">
                     <div className="col-span-1 p-2">
@@ -16,7 +17,7 @@ export default function Thread() {
                         />
                     </div>
                     <div className="col-span-6 pt-2">
-                        <Link to={`/thread/1`}>
+                        <Link to={`/thread/` + el}>
                             <div className="flex">
                                 <h1 className="font-bold pr-2">Raihan Aqil </h1>
                                 <span className="text-neutral-500 font-sm">
@@ -130,3 +131,6 @@ export default function Thread() {
       </>
   );
 }
+
+
+export default Thread

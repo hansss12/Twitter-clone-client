@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import img from "../assets/logo.jpg"
+import React from "react";
 
-export default function Sidebar() {
-  const navigation = useLocation();
-  const active = "text-xl font-semibold";
+const Sidebar: React.FC = () => {
+  const navigation : any = useLocation();
+  const active : string = "text-xl font-semibold";
   return (
       <nav className=" flex flex-col justify-between py-8 px-12 gap-2">
           <div className="flex flex-col justify-between  flex-1">
@@ -213,3 +214,5 @@ export default function Sidebar() {
       </nav>
   );
 }
+
+export default Sidebar

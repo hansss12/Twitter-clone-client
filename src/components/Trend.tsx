@@ -1,4 +1,6 @@
-export default function Trend() {
+import React from "react";
+
+const Trend: React.FC = () => {
   return (
       <div className="flex flex-col justify-between w-auto border border-neutral-800 border-b-0 px-12 gap-2">
           {/* <!-- Search button --> */}
@@ -69,9 +71,6 @@ export default function Trend() {
               <a href="" className="text-sm text-neutral-500 hover:underline">
                   Advertising information{" "}
               </a>
-              <a href="" className="text-sm text-neutral-500 hover:underline">
-                  Cookie Policy{" "}
-              </a>
               <br />
               <a href="" className="text-sm text-neutral-500 hover:underline">
                   More...
@@ -82,3 +81,5 @@ export default function Trend() {
       </div>
   );
 }
+
+export default Trend
