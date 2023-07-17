@@ -1,11 +1,30 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import img from "../assets/logo.jpg";
-import React from "react";
+import React, { useState } from "react";
+
+type Tweet = {
+    description: string;
+}
 
 const TweetPost: React.FC = () => {
     const active = "flex flex-1 items-center justify-center font-bold text-sm border-b-2 pb-2 border-emerald-500";
     const inActive = "flex flex-1 items-center justify-center font-medium text-sm pb-2 text-neutral-500";
     const navigation = useLocation()
+    const [tweet, setTweet] = useState<Tweet>(
+        {
+            description: ""
+        }
+    )
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      setTweet((prevTweet) => ({ ...prevTweet, [name]: value }));
+    };
+  
+    const postTweet = (event: any) => {
+      event.preventDefault()
+      console.log("masuk");
+    }
     return (
         <div className="flex-1">
             {/* <!-- ! Navigation --> */}
@@ -45,17 +64,17 @@ const TweetPost: React.FC = () => {
                         />
                     </div>
                     <div className="w-full flex flex-col justify-between gap-2">
-                        <form action="POST">
+                        <form onSubmit={postTweet}>
                             <div>
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    name="description"
+                                    value={tweet.description}
+                                    onChange={handleInputChange}
                                     placeholder="What's happening?"
                                     className="bg-transparent border border-transparent rounded w-full font-medium placeholder:text-neutral-700 py-4 px-2 outline-none focus:border-emerald-500 placeholder:text-xl"
                                 />
                             </div>
-                        </form>
                         <div className="flex justify-between items-center">
                             <div className="flex gap-2">
                                 <svg
@@ -114,11 +133,12 @@ const TweetPost: React.FC = () => {
                                 </svg>
                             </div>
                             <div>
-                                <button className="bg-emerald-500 hover:bg-emerald-600 py-1 px-3 rounded-full font-bold transition-all">
+                                <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 py-1 px-3 rounded-full font-bold transition-all">
                                     Tweet
                                 </button>
                             </div>
                         </div>
+                      </form>
                     </div>
                 </div>
                 <Outlet />

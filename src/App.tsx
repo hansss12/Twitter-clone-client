@@ -10,6 +10,7 @@ import ThreadDetail from "./components/ThreadDetail";
 import AuthLayout from "./pages/AuthLayout";
 import Auth from "./components/Auth/Auth";
 import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
 
 const App: React.FC = () => {
   return (
@@ -33,7 +34,7 @@ const App: React.FC = () => {
             <Route path="/auth" element={<AuthLayout/>}>
               <Route path="" element={<Auth/>}/>
               <Route path="login" element={<Login/>} />
-              <Route path="register" element={<></>}/>
+              <Route path="register" element={<Register/>}/>
             </Route>
           </Routes>
         </div>

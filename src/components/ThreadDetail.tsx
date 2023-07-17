@@ -1,9 +1,28 @@
 import { Link } from "react-router-dom";
 import img from "../assets/logo.jpg"
 import Comment from "./Comment";
-import React from "react";
+import React, { useState } from "react";
+
+type Comment = {
+  description: string;
+}
 
 const ThreadDetail: React.FC = () => {
+  const [comment, setComment] = useState<Comment>(
+    {
+        description: ""
+    }
+  )
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setComment((prevComment) => ({ ...prevComment, [name]: value }));
+  };
+
+  const postComment = (event: any) => {
+    event.preventDefault()
+    console.log("masuk");
+  }
   return (
       <div className="flex-1 pt-2">
           <div className="flex mb-5 max-h-[8vh]">
@@ -106,17 +125,18 @@ const ThreadDetail: React.FC = () => {
                               @hansss12
                           </Link>
                       </h1>
-                      <form action="POST">
+                      {/* add comment */}
+                    <form onSubmit={postComment}>
                           <div>
                               <input
                                   type="text"
-                                  name=""
-                                  id=""
+                                  name="description"
+                                  value={comment.description}
+                                  onChange={handleInputChange}
                                   placeholder="Tweet your reply!"
                                   className="bg-transparent border border-transparent rounded w-full font-medium placeholder:text-neutral-700 py-4 px-2 outline-none focus:border-emerald-500 placeholder:text-xl"
                               />
                           </div>
-                      </form>
                       <div className="flex justify-between items-center">
                           <div className="flex gap-2">
                               <svg
@@ -180,6 +200,7 @@ const ThreadDetail: React.FC = () => {
                               </button>
                           </div>
                       </div>
+                    </form>
                   </div>
               </div>
               {/* Comment */}

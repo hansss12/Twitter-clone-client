@@ -1,0 +1,27 @@
+{  
+  "User": [
+    {
+      "id": 1,
+      "username": "raihan",
+      "email": "raihan@baiq.com",
+      "password": "password",
+      "location": "indonesia",
+      "description": "aku adalah seorang ultraman",
+      "fullname": "Raihan Aqil"
+    }
+  ],
+  "Thread": [ 
+    {
+      "id": 1,
+      "description": "ini thread",
+      "like": 10
+    }
+  ],  
+  "Comment": [
+    {
+      "id": 1,
+      "description": "ini comment",
+      "threadId": 1
+    }
+  ]
+}

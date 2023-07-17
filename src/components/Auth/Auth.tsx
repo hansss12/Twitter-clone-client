@@ -13,9 +13,11 @@ const Auth: React.FC = () => {
           <h1 className="text-xl font-semibold text-white mt-10">
               Join twitter today.
           </h1>
-          <button className="rounded-full bg-emerald-500 w-full text-xl font-semibold text-black p-2 mt-5">
-              Sign Up
-          </button>
+          <Link to="/auth/register">
+            <button className="rounded-full bg-emerald-500 w-full text-xl font-semibold text-black p-2 mt-5">
+                Sign Up
+            </button>
+          </Link>
           <Link to="/auth/login">
             <button className="rounded-full border border-emerald-500 w-full text-xl font-semibold text-emerald-500 p-2 mt-5">
                 Login

@@ -1,7 +1,11 @@
 export interface User {
   id: number;
-  name: string;
+  username: string;
   email: string;
+  password: string;
+  location: string;
+  description: string;
+  fullname: string;
 }
 
 // You can add more types as needed
