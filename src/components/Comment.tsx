@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import img from "../assets/logo.jpg";
 import React from "react";
 
 const Comment: React.FC = () => {
-    const arr: any = [1, 2, 3, 4];
+    const comment = useSelector((state: any) => {
+        return state.commentReducer.data
+    })
     return (
         <>
-            {arr.map((el: any) => {
+            {comment.map((el: any) => {
                 return (
-                    <div className="grid grid-cols-7 border-b border-neutral-800 pb-5" key={el}>
+                    <div className="grid grid-cols-7 border-b border-neutral-800 pb-5" key={el.id}>
                         <div className="col-span-1 p-2">
                             <img
                                 src={img}
@@ -17,20 +19,17 @@ const Comment: React.FC = () => {
                             />
                         </div>
                         <div className="col-span-6 pt-2">
-                            <Link to={`/thread/1`}>
-                                <div className="flex">
-                                    <h1 className="font-bold pr-2">
-                                        Raihan Aqil{" "}
-                                    </h1>
-                                    <span className="text-neutral-500 font-sm">
-                                        @hansss12 · Jun 23
-                                    </span>
-                                </div>
-                                <h1 className="text-white text-base font-normal">
-                                    Kemarin saya beli lulur, tapi kok kulit saya
-                                    jadi panjang. Ternyata lulur Purbaleunyi
+                            <div className="flex">
+                                <h1 className="font-bold pr-2">
+                                    Raihan Aqil{" "}
                                 </h1>
-                            </Link>
+                                <span className="text-neutral-500 font-sm">
+                                    @hansss12 · Jun 23
+                                </span>
+                            </div>
+                            <h1 className="text-white text-base font-normal">
+                                {el.description}
+                            </h1>
                             <div className="grid grid-cols-5 mt-5">
                                 {/* comments */}
                                 <div className="flex cursor-pointer w-fit">
@@ -89,7 +88,7 @@ const Comment: React.FC = () => {
                                         />
                                     </svg>
                                     <h4 className="text-neutral-500 text-sm pl-2 hover:text-emerald-500">
-                                        54
+                                        {el.like}
                                     </h4>
                                 </div>
                                 {/* views */}

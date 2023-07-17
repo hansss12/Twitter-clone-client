@@ -1,13 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import img from "../assets/logo.jpg"
 import Comment from "./Comment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { commentPost, fetchComment, fetchThreadDetail } from "../store/actions/actions";
+import { useSelector } from "react-redux";
 
 type Comment = {
   description: string;
 }
 
 const ThreadDetail: React.FC = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchComment())
+  }, [])
+  const {id} = useParams<{id: string}>()
+  
+  useEffect(() => {
+    dispatch(fetchThreadDetail(id))
+  }, [id])
+
+  const threadDetail = useSelector((state: any) => {
+    return state.threadReducer.dataDetail
+  })
+  
   const [comment, setComment] = useState<Comment>(
     {
         description: ""
@@ -19,9 +36,15 @@ const ThreadDetail: React.FC = () => {
     setComment((prevComment) => ({ ...prevComment, [name]: value }));
   };
 
-  const postComment = (event: any) => {
+  const postComment = async (event: any) => {
     event.preventDefault()
-    console.log("masuk");
+    const response = await dispatch(commentPost(comment))
+    if (!response) {
+      throw new Error("Error Post Comment")
+    }
+    setComment({
+      description: ""
+    })
   }
   return (
       <div className="flex-1 pt-2">
@@ -80,9 +103,7 @@ const ThreadDetail: React.FC = () => {
               {/* Detail Thread */}
               <div className="mx-4 mt-4 border-b border-neutral-800 pb-5">
                   <h1 className="text-white text-lg font-normal">
-                      Menjaga kewarasan di dunia yang makin mengherankan
-                      merupakan tugas yang berat. Mungkin mimpi jangan kejauhan,
-                      yang penting bertahan hidup saja dulu
+                      {threadDetail?.description}
                   </h1>
                   <h1 className="text-neutral-500 mt-5">
                       9:30 PM · Jun 23, 2023 ·{" "}

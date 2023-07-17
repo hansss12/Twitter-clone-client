@@ -1,4 +1,4 @@
-{  
+{
   "User": [
     {
       "id": 1,
@@ -7,21 +7,93 @@
       "password": "password",
       "location": "indonesia",
       "description": "aku adalah seorang ultraman",
-      "fullname": "Raihan Aqil"
+      "fullname": "Raihan Aqil",
+      "imgUrl": "https://example.com/"
+    },
+    {
+      "username": "raihan",
+      "email": "raihan@baiq.com",
+      "password": "raihanz301",
+      "id": 2
+    },
+    {
+      "username": "raihan__12",
+      "email": "raihan@baiq.com",
+      "location": "Indonesia",
+      "description": "aku ganteng",
+      "fullname": "Raihan Aqil Fadillah",
+      "imgUrl": "https://api-lotte.hollacode.com/api/static/inspirasi/1675222505398-resep-fried-chicken-krispi-ala-restoran.jpg",
+      "id": 3
+    },
+    {
+      "username": "raihan__12",
+      "email": "raihan.aqil2003@gmail.com ",
+      "password": "123456",
+      "location": "indonesia",
+      "description": "aku adalah seorang ultraman",
+      "fullname": "Raihan Aqil",
+      "imgUrl": "https://example.com/",
+      "id": 4
+    },
+    {
+      "username": "raihan",
+      "email": "raihan@baikk.com",
+      "password": "123456",
+      "location": "indonesia",
+      "description": "aku adalah seorang ultraman",
+      "fullname": "Raihan Aqil",
+      "imgUrl": "https://example.com/",
+      "id": 5
+    },
+    {
+      "username": "",
+      "email": "",
+      "password": "",
+      "location": "indonesia",
+      "description": "aku adalah seorang ultraman",
+      "fullname": "Raihan Aqil",
+      "imgUrl": "https://example.com/",
+      "id": 6
+    },
+    {
+      "description": "Menjaga kewarasan di dunia yang makin                                 mengherankan merupakan tugas yang berat. Mungkin                                 mimpi jangan kejauhan, yang penting bertahan                                 hidup saja dulu",
+      "like": 0,
+      "id": 7
     }
   ],
-  "Thread": [ 
+  "Thread": [
     {
       "id": 1,
       "description": "ini thread",
       "like": 10
+    },
+    {
+      "description": "Menjaga kewarasan di dunia yang makin                                 mengherankan merupakan tugas yang berat. Mungkin                                 mimpi jangan kejauhan, yang penting bertahan                                 hidup saja dulu",
+      "like": 0,
+      "id": 2
+    },
+    {
+      "description": "aku lagi gabut banget gais",
+      "like": 0,
+      "id": 3
     }
-  ],  
+  ],
   "Comment": [
     {
       "id": 1,
       "description": "ini comment",
-      "threadId": 1
+      "threadId": 1,
+      "like": 10
+    },
+    {
+      "description": "Kemarin saya beli lulur, tapi kok kulit saya                                 jadi panjang. Ternyata lulur Purbaleunyi",
+      "like": 0,
+      "id": 2
+    },
+    {
+      "description": "Menjaga kewarasan di dunia yang makin                                 mengherankan merupakan tugas yang berat. Mungkin                                 mimpi jangan kejauhan, yang penting bertahan                                 hidup saja dulu",
+      "like": 0,
+      "id": 3
     }
   ]
 }

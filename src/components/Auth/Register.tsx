@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import logo from "../../assets/twitter-white.png";
-
+import { useDispatch } from "react-redux";
+import type {} from 'redux-thunk/extend-redux';
+import { register } from "../../store/actions/actions";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 type User = {
   username: string;
   email: string;
@@ -15,14 +19,25 @@ const Register: React.FC = () => {
       password: ""
     }
   );
+  const dispatch = useDispatch()
+  const navigation = useNavigate()
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
-  const postRegister = (event: any) => {
+  const postRegister = async (event: any) => {
     event.preventDefault()
-    console.log("masuk");
+    const response = await dispatch(register(user))
+    if (!response) {
+      throw new Error("Register Error")
+    }
+    setUser({
+      username: "",
+      email: "",
+      password: ""
+    })
+    return navigation("/auth/login")
   }
     return (
         <>
@@ -106,7 +121,7 @@ const Register: React.FC = () => {
                                     name="username"
                                     value={user.username}
                                     onChange={handleInputChange}
-                                    className="bg-black border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
+                                    className="bg-white border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                     placeholder="jhondoe"
                                 />
                             </div>
@@ -129,7 +144,7 @@ const Register: React.FC = () => {
                                     name="email"
                                     value={user.email}
                                     onChange={handleInputChange}
-                                    className="bg-black border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
+                                    className="bg-white border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                     placeholder="jhondoe@mail.com"
                                 />
                             </div>
@@ -154,7 +169,7 @@ const Register: React.FC = () => {
                                     name="password"
                                     value={user.password}
                                     onChange={handleInputChange}
-                                    className="bg-black border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
+                                    className="bg-white border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                     placeholder="password"
                                 />
                             </div>
@@ -163,6 +178,14 @@ const Register: React.FC = () => {
                                 Sign Up
                             </button>
                         </form>
+                        <div>
+                          <h1 className="text-white mt-2">
+                            Have an account?{" "}
+                            <Link to={"/auth/login"} className="hover:text-emerald-300 hover:underline">
+                                Sign in
+                            </Link>
+                        </h1>
+                        </div>
                     </div>
                 </div>
             </div>

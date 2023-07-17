@@ -1,12 +1,15 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import img from "../assets/logo.jpg";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { threadPost } from "../store/actions/actions";
 
 type Tweet = {
     description: string;
 }
 
 const TweetPost: React.FC = () => {
+  const dispatch = useDispatch()
     const active = "flex flex-1 items-center justify-center font-bold text-sm border-b-2 pb-2 border-emerald-500";
     const inActive = "flex flex-1 items-center justify-center font-medium text-sm pb-2 text-neutral-500";
     const navigation = useLocation()
@@ -21,9 +24,15 @@ const TweetPost: React.FC = () => {
       setTweet((prevTweet) => ({ ...prevTweet, [name]: value }));
     };
   
-    const postTweet = (event: any) => {
+    const postTweet = async (event: any) => {
       event.preventDefault()
-      console.log("masuk");
+      const response = await dispatch(threadPost(tweet))
+      if (!response) {
+        throw new Error("Error Post Thread")
+      }
+      setTweet({
+        description: ""
+      })
     }
     return (
         <div className="flex-1">
@@ -64,7 +73,7 @@ const TweetPost: React.FC = () => {
                         />
                     </div>
                     <div className="w-full flex flex-col justify-between gap-2">
-                        <form onSubmit={postTweet}>
+                        <form onSubmit={(event) => postTweet(event)}>
                             <div>
                                 <input
                                     type="text"

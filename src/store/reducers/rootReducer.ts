@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
-import threadReducer from "./threadReducer"
+import usersReducer from "./userReducer"
+import threadReducer from './threadReducer'
+import commentReducer from './commentreducer'
 
-const rootReducer = combineReducers({ threadReducer })
+const rootReducer = combineReducers({ usersReducer, threadReducer, commentReducer })
 export default rootReducer

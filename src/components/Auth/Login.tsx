@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/twitter-white.png";
+import { Link } from "react-router-dom";
 
 type User = {
   username: string;
@@ -81,7 +82,7 @@ const Login: React.FC = () => {
                     </div>
                     {/* form login */}
                     <div className="mt-10">
-                        <form onSubmit={postLogin}>
+                        <form onSubmit={(event) => postLogin(event)}>
                         <div className="relative mb-4">
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg
@@ -105,7 +106,7 @@ const Login: React.FC = () => {
                                     name="username"
                                     value={user.username}
                                     onChange={handleInputChange}
-                                    className="bg-black border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
+                                    className="bg-white border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                     placeholder="jhondoe"
                                 />
                             </div>
@@ -130,7 +131,7 @@ const Login: React.FC = () => {
                                     name="password"
                                     value={user.password}
                                     onChange={handleInputChange}
-                                    className="bg-black border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
+                                    className="bg-white border text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                     placeholder="password"
                                 />
                             </div>
@@ -139,7 +140,14 @@ const Login: React.FC = () => {
                                 Login
                             </button>
                         </form>
-                        
+                        <div>
+                          <h1 className="text-white mt-2">
+                            Try new account?{" "}
+                            <Link to={"/auth/register"} className="hover:text-emerald-300 hover:underline">
+                                Sign up
+                            </Link>
+                        </h1>
+                        </div>
                     </div>
                 </div>
             </div>

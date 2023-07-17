@@ -1,13 +1,76 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import img from "../assets/logo.jpg";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchProfile, profilePost } from "../store/actions/actions";
+import { useSelector } from "react-redux";
+type User = {
+    username: string;
+    email: string;
+    location: string;
+    description: string;
+    fullname: string;
+    imgUrl: string;
+};
 
 const Profile: React.FC = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+      dispatch(fetchProfile())
+    }, [])
+    const dataProfile = useSelector((state: any) => {
+        return state.usersReducer.data;
+    });
+    console.log(dataProfile);
+
     const borderActive: string =
         "font-semibold border-b-4 pb-2 border-emerald-500";
     const borderInactive: string = "font-semibold pb-2";
     const [showModal, setShowModal] = React.useState(false);
     const navigation = useLocation();
+    const [profile, setProfile] = useState<User>({
+        username: "",
+        email: "",
+        location: "",
+        description: "",
+        fullname: "",
+        imgUrl: "",
+    });
+
+    // useEffect(() => {
+    //   setProfile({
+    //       username: dataProfile.username,
+    //       email: dataProfile.email,
+    //       location: dataProfile.location ? dataProfile.location : "",
+    //       description: dataProfile.description ? dataProfile.description : "",
+    //       fullname: dataProfile.fullname ? dataProfile.fullname : "",
+    //       imgUrl: dataProfile.imgUrl ? dataProfile.imgUrl : "",
+    //   });
+    // }, [dataProfile])
+    
+
+    const handleChange = (event: any) => {
+        const { name, value } = event.target;
+        setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
+    };
+
+    const postProfile = async (event: any) => {
+        event.preventDefault();
+        const response = await dispatch(profilePost(profile));
+        if (!response) {
+            throw new Error("Profile Post Error");
+        }
+        console.log(response);
+        setProfile({
+            username: "",
+            email: "",
+            location: "",
+            description: "",
+            fullname: "",
+            imgUrl: "",
+        });
+        setShowModal(false);
+    };
     return (
         <div className="flex-1 pt-2">
             <div className="flex mb-2 max-h-[10vh]">
@@ -28,7 +91,9 @@ const Profile: React.FC = () => {
                     </svg>
                 </Link>
                 <div className="pl-6">
-                    <h1 className="text-xl font-bold">Raihan Aqil</h1>
+                    <h1 className="text-xl font-bold">
+                        {dataProfile?.fullname}
+                    </h1>
                     <h3 className="text-neutral-500 font-sm">0 Tweets</h3>
                 </div>
             </div>
@@ -41,7 +106,7 @@ const Profile: React.FC = () => {
                 />
                 {/* profilr img */}
                 <img
-                    src={img}
+                    src={dataProfile ? dataProfile.imgUrl : img}
                     alt="profile"
                     className="ml-5 rounded-full h-[15vh] w-[8.5vw] p-1 bg-black relative bottom-[7vh]"
                 />
@@ -61,22 +126,34 @@ const Profile: React.FC = () => {
                                     {/*content*/}
                                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-black outline-none focus:outline-none">
                                         {/*header*/}
+                                    <form
+                                        onSubmit={(event) =>
+                                            postProfile(event)
+                                        }
+                                    >
                                         <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                             <h3 className="text-xl font-medium">
                                                 Edit Profile
                                             </h3>
-                                            <button className="bg-white text-black rounded-full text-l font-medium px-4 py-1">
+                                            <button
+                                                type="submit"
+                                                className="bg-white text-black rounded-full text-l font-medium px-4 py-1"
+                                            >
                                                 Save
                                             </button>
                                         </div>
                                         {/*body*/}
                                         <div className="relative p-6 flex-auto">
                                             <img
-                                                src={img}
+                                                src={
+                                                    dataProfile
+                                                        ? dataProfile.imgUrl
+                                                        : img
+                                                }
                                                 alt="profile"
                                                 className="mx-auto rounded-full h-[15vh] w-[8.5vw] p-1 bg-black"
                                             />
-                                            <form action="">
+                                            {/* Form Profile */}
                                                 <div className="flex justify-center">
                                                     <div className="relative mt-10">
                                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -101,6 +178,12 @@ const Profile: React.FC = () => {
                                                             type="text"
                                                             id="input-group-1"
                                                             name="username"
+                                                            value={
+                                                                profile.username
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
                                                             className="bg-white border text-gray-900 text-sm rounded-lg block w-[18vw] mr-10 pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                                             placeholder="Username"
                                                         />
@@ -121,9 +204,15 @@ const Profile: React.FC = () => {
                                                         <input
                                                             type="text"
                                                             id="input-group-1"
-                                                            name="Email"
+                                                            name="email"
+                                                            value={
+                                                                profile.email
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
                                                             className="bg-white border text-gray-900 text-sm rounded-lg block w-[18vw] pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
-                                                            placeholder="email"
+                                                            placeholder="Email"
                                                         />
                                                     </div>
                                                 </div>
@@ -151,6 +240,12 @@ const Profile: React.FC = () => {
                                                             type="text"
                                                             id="input-group-1"
                                                             name="fullname"
+                                                            value={
+                                                                profile.fullname
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
                                                             className="bg-white border text-gray-900 text-sm rounded-lg block w-[18vw] mr-10 pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                                             placeholder="Fullname"
                                                         />
@@ -183,6 +278,12 @@ const Profile: React.FC = () => {
                                                             type="text"
                                                             id="input-group-1"
                                                             name="location"
+                                                            value={
+                                                                profile.location
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
                                                             className="bg-white border text-gray-900 text-sm rounded-lg block w-[18vw] pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                                             placeholder="Location"
                                                         />
@@ -211,6 +312,12 @@ const Profile: React.FC = () => {
                                                         <input
                                                             type="text"
                                                             id="input-group-1"
+                                                            value={
+                                                                profile.imgUrl
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
                                                             name="imgUrl"
                                                             className="bg-white border text-gray-900 text-sm rounded-lg block w-[40vw] pl-10 p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                                             placeholder="https://profile_image_example.com"
@@ -221,12 +328,18 @@ const Profile: React.FC = () => {
                                                     <textarea
                                                         id="input-group-1"
                                                         name="description"
+                                                        value={
+                                                            profile.description
+                                                        }
+                                                        onChange={(event) =>
+                                                            handleChange(event)
+                                                        }
                                                         className="bg-white border text-gray-900 text-sm rounded-lg block w-[40vw] p-2.5  dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:border-white"
                                                         placeholder="Description"
                                                     />
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                          </form>
                                         {/*footer*/}
                                         <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                                             <button
@@ -248,9 +361,44 @@ const Profile: React.FC = () => {
                 </div>
                 {/* profile attribute */}
                 <div className="ml-5 relative bottom-[9vh]">
-                    <h1 className="text-xl font-bold">Raihan Aqil</h1>
-                    <h1 className="text-neutral-500 font-sm">@hansss12</h1>
-                    <div className="flex text-neutral-500 py-5">
+                    <h1 className="text-xl font-bold">
+                        {dataProfile?.fullname}
+                    </h1>
+                    <h1 className="text-neutral-500 font-sm">
+                        @{dataProfile?.username}
+                    </h1>
+                    {dataProfile?.description.length != 0 ?
+                    <h1 className="text-sm py-3 pt-2">
+                      {dataProfile?.description}
+                    </h1>
+                    : <></>}
+                    <div className="flex text-neutral-500 pb-5">
+                        {dataProfile?.location.length != 0 ? 
+                        <>
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                          >
+                              <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                              <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                              />
+                          </svg>
+
+                          <h1 className="font-sm ml-1 mr-5">{dataProfile?.location}</h1>
+                        </>
+                      : <></>
+                      }
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -265,7 +413,7 @@ const Profile: React.FC = () => {
                                 d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
                             />
                         </svg>
-                        <h1 className="font-sm ml-2">Joined May 2023</h1>
+                        <h1 className="font-sm ml-1">Joined May 2023</h1>
                     </div>
                     <div className="flex">
                         <h1 className="">

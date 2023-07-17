@@ -5,8 +5,18 @@ import TweetPost from "../components/TweetPost";
 import Thread from "../components/Thread";
 import Profile from "../components/Profile";
 import ThreadDetail from "../components/ThreadDetail";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchProfile, fetchThread } from "../store/actions/actions";
 
 const Layout: React.FC = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchThread())
+  })
+  useEffect(() => {
+    dispatch(fetchProfile())
+  , []})
   return (
     <div className="bg-black text-white w-screen min-h-screen h-full flex select-none">
       <Sidebar />

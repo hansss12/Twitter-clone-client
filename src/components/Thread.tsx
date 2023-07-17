@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
 import img from '../assets/logo.jpg'
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Thread: React.FC = () => {
-  const arr : number[] = [1,2,3,4,5]
+  const thread = useSelector((state: any) => {
+    return state.threadReducer.data
+  })
   return (
       <>
-          {arr.map((el: any) => {
+          {thread?.map((el: any) => {
             return (
-                <div className="grid grid-cols-7 border-b border-neutral-800 pb-5">
+                <div className="grid grid-cols-7 border-b border-neutral-800 pb-5" key={el.id}>
                     <div className="col-span-1 p-2">
                         <img
                             src={img}
@@ -17,7 +20,7 @@ const Thread: React.FC = () => {
                         />
                     </div>
                     <div className="col-span-6 pt-2">
-                        <Link to={`/thread/` + el}>
+                        <Link to={`/thread/` + el.id}>
                             <div className="flex">
                                 <h1 className="font-bold pr-2">Raihan Aqil </h1>
                                 <span className="text-neutral-500 font-sm">
@@ -25,10 +28,7 @@ const Thread: React.FC = () => {
                                 </span>
                             </div>
                             <h1 className="text-white text-base font-normal">
-                                Menjaga kewarasan di dunia yang makin
-                                mengherankan merupakan tugas yang berat. Mungkin
-                                mimpi jangan kejauhan, yang penting bertahan
-                                hidup saja dulu
+                                {el.description}
                             </h1>
                         </Link>
                         <div className="grid grid-cols-5 mt-5">
@@ -89,7 +89,7 @@ const Thread: React.FC = () => {
                                     />
                                 </svg>
                                 <h4 className="text-neutral-500 text-sm pl-2 hover:text-emerald-500">
-                                    5,200
+                                    {el.like}
                                 </h4>
                             </div>
                             {/* views */}

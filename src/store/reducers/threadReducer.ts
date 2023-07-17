@@ -1,36 +1,52 @@
-import { User } from "./types";
+import { Thread } from "./types";
 
-interface UsersState {
-  data: User[];
+interface threadState {
+  data: Thread[];
+  dataDetail: Thread | null
   loading: boolean;
   error: string | null;
 }
 
-const initialUsersState: UsersState = {
+const initialThreadState: threadState = {
   data: [],
+  dataDetail: null,
   loading: false,
   error: null
 };
 
-const usersReducer = (state = initialUsersState, action: any) => {
+const threadReducer = (state = initialThreadState, action: any) => {
   switch (action.type) {
-    case "FETCH_USERS_SUCCESS":
+    case "FETCH_THREAD_SUCCESS":
       return {
         ...state,
         data: action.payload,
         loading: false,
         error: null
       };
-    case "FETCH_USERS_FAILURE":
+    case "FETCH_THREAD_FAILURE":
       return {
         ...state,
-        data: [],
+        data: null,
         loading: false,
         error: action.payload
       };
+      case "FETCH_THREAD_DETAIL_SUCCESS":
+        return {
+          ...state,
+          dataDetail: action.payload,
+          loading: false,
+          error: null
+        };
+      case "FETCH_THREAD_DETAIL_FAILURE":
+        return {
+          ...state,
+          dataDetail: null,
+          loading: false,
+          error: action.payload
+        };
     default:
       return state;
   }
 };
 
-export default usersReducer;
+export default threadReducer;
