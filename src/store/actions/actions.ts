@@ -10,6 +10,10 @@ type Tweet = {
   description: string;
 }
 
+type Comment = {
+  description: string;
+}
+
 type Profile = {
   username: string;
   email: string;
@@ -18,6 +22,8 @@ type Profile = {
   fullname: string;
   imgUrl: string;
 };
+
+// users
 
 export const fetchProfile = () => {
   return async (dispatch: Dispatch) => {
@@ -35,7 +41,7 @@ export const fetchProfile = () => {
 };
 
 export const register = (data: Register) => {
-  return async (dispatch: Dispatch) => {
+  return async () => {
     try {
       const response = await fetch(`${baseUrl}/User`, {
         method: "POST",
@@ -50,7 +56,6 @@ export const register = (data: Register) => {
           "imgUrl": "https://example.com/"
         })
       })
-
       const res = await response.json()
       return res
     } catch (error) {
@@ -79,6 +84,8 @@ export const profilePost = (data: Profile) => {
     }
   }
 }
+
+// thread
 
 export const threadPost = (data: Tweet) => {
   return async (dispatch: Dispatch) => {
@@ -132,6 +139,8 @@ export const fetchThreadDetail = (id: any) => {
   }
 }
 
+// comment
+
 export const fetchComment = () => {
   return async (dispatch: Dispatch) => {
     try {
@@ -147,7 +156,7 @@ export const fetchComment = () => {
   }
 }
 
-export const commentPost = (data: Tweet) => {
+export const commentPost = (data: Comment) => {
   return async (dispatch: Dispatch) => {
     try {
       const response = await fetch(`${baseUrl}/Comment`, {
@@ -162,6 +171,46 @@ export const commentPost = (data: Tweet) => {
       })
       const res = await response.json()
       dispatch(fetchComment())
+      return res
+    } catch (error) {
+      console.log(error);            
+    }
+  }
+}
+
+// like 
+
+export const addLike = (id: any, type: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await fetch(`${baseUrl}/${type}/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+      const res = await response.json()
+      dispatch(fetchComment())
+      dispatch(fetchThread())
+      return res
+    } catch (error) {
+      console.log(error);            
+    }
+  }
+}
+
+export const removeLike = (id: any, type: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await fetch(`${baseUrl}/${type}/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+      const res = await response.json()
+      dispatch(fetchComment())
+      dispatch(fetchThread())
       return res
     } catch (error) {
       console.log(error);            

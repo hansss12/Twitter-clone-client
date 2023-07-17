@@ -21,7 +21,6 @@ const Profile: React.FC = () => {
     const dataProfile = useSelector((state: any) => {
         return state.usersReducer.data;
     });
-    console.log(dataProfile);
 
     const borderActive: string =
         "font-semibold border-b-4 pb-2 border-emerald-500";
@@ -29,24 +28,13 @@ const Profile: React.FC = () => {
     const [showModal, setShowModal] = React.useState(false);
     const navigation = useLocation();
     const [profile, setProfile] = useState<User>({
-        username: "",
-        email: "",
-        location: "",
-        description: "",
-        fullname: "",
-        imgUrl: "",
+      username: dataProfile?.username || "",
+      email: dataProfile?.email || "",
+      location: dataProfile?.location || "",
+      description: dataProfile?.description || "",
+      fullname: dataProfile?.fullname || "",
+      imgUrl: dataProfile?.imgUrl || "",
     });
-
-    // useEffect(() => {
-    //   setProfile({
-    //       username: dataProfile.username,
-    //       email: dataProfile.email,
-    //       location: dataProfile.location ? dataProfile.location : "",
-    //       description: dataProfile.description ? dataProfile.description : "",
-    //       fullname: dataProfile.fullname ? dataProfile.fullname : "",
-    //       imgUrl: dataProfile.imgUrl ? dataProfile.imgUrl : "",
-    //   });
-    // }, [dataProfile])
     
 
     const handleChange = (event: any) => {
@@ -61,14 +49,6 @@ const Profile: React.FC = () => {
             throw new Error("Profile Post Error");
         }
         console.log(response);
-        setProfile({
-            username: "",
-            email: "",
-            location: "",
-            description: "",
-            fullname: "",
-            imgUrl: "",
-        });
         setShowModal(false);
     };
     return (

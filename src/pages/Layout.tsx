@@ -13,10 +13,9 @@ const Layout: React.FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchThread())
-  })
-  useEffect(() => {
     dispatch(fetchProfile())
-  , []})
+    dispatch(fetchProfile())
+  })
   return (
     <div className="bg-black text-white w-screen min-h-screen h-full flex select-none">
       <Sidebar />
